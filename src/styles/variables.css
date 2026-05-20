@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Colors */
+  --primary: #D4AF37;       /* Golden Yellow */
+  --primary-dark: #B8962E;
+  --secondary: #8B0000;     /* Deep Red */
+  --bg-cream: #FFF8E7;      /* Warm Cream */
+  --bg-light: #fcf9f2;      /* Section Off-White */
+  --text-dark: #1a1a1a;     /* Sophisticated Dark */
+  --text-muted: #666666;
+  --white: #FFFFFF;
+  --border: rgba(212, 175, 55, 0.3);
+  
+  /* Fonts */
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+
+  /* Transitions */
+  --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  --shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 20px 40px rgba(139, 0, 0, 0.08);
+  --radius: 0; /* Design uses sharper, more architectural corners */
+}

@@ -28,6 +28,17 @@ app.get("/api/health", (req, res) => {
   res.status(200).json({ message: "Pickle Shop API is running perfectly!" });
 });
 
+// 3.5 SERVE FRONTEND STATIC FILES IN PRODUCTION
+if (process.env.NODE_ENV === "production") {
+  // Since esbuild outputs to dist/server.cjs, __dirname *is* the dist folder in production
+  app.use(express.static(__dirname));
+
+  // Handle single-page application routing (React Router fallback)
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+  });
+}
+
 // 4. ERROR MIDDLEWARE
 const { errorHandler } = require("./backend/middleware/errorMiddleware");
 app.use(errorHandler);
@@ -35,5 +46,5 @@ app.use(errorHandler);
 // 5. START SERVER
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

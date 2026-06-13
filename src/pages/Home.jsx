@@ -14,7 +14,7 @@ const Home = () => {
       <section className="hero">
         <div className="hero-content">
           <div className="hero-text">
-            <span className="heritage-label">Est. 1964</span>
+            <span className="heritage-label">Est. 2021</span>
             <h1>
               The Soul of the <span>Himalayas</span> in a Jar.
             </h1>

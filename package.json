@@ -3,14 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "scripts": {
-      "dev": "tsx server.js",
-      "front": "vite",
-      "build": "vite build   && esbuild server.js --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
-      "start": "node dist/server.cjs",
-      "clean": "rm -rf dist",
-      "lint": "tsc --noEmit"
-    }
+    "server": "tsx server.js",
+    "client": "vite",
+    "build": "vite build && esbuild server.js --bundle --platform=node --format=cjs --packages=external --outfile=dist/server.cjs",
+    "start": "node dist/server.cjs"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",

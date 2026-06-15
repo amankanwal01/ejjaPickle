@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Minus, Trash2, Package } from 'lucide-react';
-import { useProducts } from '../context/ProductContext';
-import { useCart } from '../context/CartContext';
-import '../styles/ComboBuilder.css';
+import React, { useState, useEffect } from "react";
+import { Plus, Minus, Trash2, Package } from "lucide-react";
+import { useProducts } from "../context/ProductContext";
+import { useCart } from "../context/CartContext";
+import "../styles/ComboBuilder.css";
 
 const ComboBuilder = () => {
   const { products } = useProducts();
@@ -12,26 +12,35 @@ const ComboBuilder = () => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const sizes = [
-    { label: 'Trio Pack (3 Jars)', value: 3, discount: 0.9 }, // 10% off
-    { label: 'Family Pack (5 Jars)', value: 5, discount: 0.85 } // 15% off
+    { label: "Trio Pack (3 Jars)", value: 3, discount: 0.9 }, // 10% off
+    { label: "Family Pack (5 Jars)", value: 5, discount: 0.85 }, // 15% off
   ];
 
   useEffect(() => {
     const basePrice = selectedItems.reduce((acc, item) => acc + item.price, 0);
-    const sizeObj = sizes.find(s => s.value === selectedSize);
+    const sizeObj = sizes.find((s) => s.value === selectedSize);
     setTotalPrice(Math.round(basePrice * (sizeObj ? sizeObj.discount : 1)));
   }, [selectedItems, selectedSize]);
 
-  const toggleProduct = (product) => {
-    if (selectedItems.find(item => item.id === product.id)) {
-      setSelectedItems(prev => prev.filter(item => item.id !== product.id));
-    } else {
-      if (selectedItems.length < selectedSize) {
-        setSelectedItems(prev => [...prev, product]);
-      } else {
-        alert(`You can only select ${selectedSize} jars for this pack.`);
-      }
+  const addProduct = (product) => {
+    if (selectedItems.length >= selectedSize) {
+      alert(`You can only select ${selectedSize} jars for this pack.`);
+      return;
     }
+
+    setSelectedItems((prev) => [
+      ...prev,
+      {
+        ...product,
+        comboItemId: Date.now() + Math.random(),
+      },
+    ]);
+  };
+
+  const removeProduct = (comboItemId) => {
+    setSelectedItems((prev) =>
+      prev.filter((item) => item.comboItemId !== comboItemId),
+    );
   };
 
   const handleAddCombo = () => {
@@ -44,9 +53,10 @@ const ComboBuilder = () => {
       id: `combo-${Date.now()}`,
       name: `Custom Combo Pack (${selectedSize} Jars)`,
       price: totalPrice,
-      image: "https://images.unsplash.com/photo-1628100014513-43183597b69c?q=80&w=300&auto=format&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1628100014513-43183597b69c?q=80&w=300&auto=format&fit=crop",
       isCombo: true,
-      items: selectedItems.map(i => i.name)
+      items: selectedItems.map((i) => i.name),
     };
 
     addToCart(comboProduct, 1);
@@ -66,11 +76,14 @@ const ComboBuilder = () => {
           <div className="size-selector">
             <h3>Step 1: Choose Your Pack Size</h3>
             <div className="size-btns">
-              {sizes.map(s => (
-                <button 
-                  key={s.value} 
-                  className={selectedSize === s.value ? 'active' : ''}
-                  onClick={() => {setSelectedSize(s.value); setSelectedItems([]);}}
+              {sizes.map((s) => (
+                <button
+                  key={s.value}
+                  className={selectedSize === s.value ? "active" : ""}
+                  onClick={() => {
+                    setSelectedSize(s.value);
+                    setSelectedItems([]);
+                  }}
                 >
                   {s.label}
                 </button>
@@ -81,11 +94,11 @@ const ComboBuilder = () => {
           <div className="pickle-selector">
             <h3>Step 2: Select {selectedSize} Pickles</h3>
             <div className="pickle-options">
-              {products.map(product => (
-                <div 
-                  key={product.id} 
-                  className={`pickle-option ${selectedItems.find(i => i.id === product.id) ? 'selected' : ''}`}
-                  onClick={() => toggleProduct(product)}
+              {products.map((product) => (
+                <div
+                  key={product.id}
+                  className="pickle-option"
+                  onClick={() => addProduct(product)}
                 >
                   <img src={product.image} alt={product.name} />
                   <div className="option-info">
@@ -93,7 +106,7 @@ const ComboBuilder = () => {
                     <p>₹{product.price}</p>
                   </div>
                   <div className="selection-indicator">
-                    {selectedItems.find(i => i.id === product.id) ? <Minus size={16} /> : <Plus size={16} />}
+                    <Plus size={16} />
                   </div>
                 </div>
               ))}
@@ -105,19 +118,25 @@ const ComboBuilder = () => {
           <div className="summary-card">
             <h3>Combo Summary</h3>
             <div className="progress-bar">
-              <div 
-                className="progress-fill" 
-                style={{ width: `${(selectedItems.length / selectedSize) * 100}%` }}
+              <div
+                className="progress-fill"
+                style={{
+                  width: `${(selectedItems.length / selectedSize) * 100}%`,
+                }}
               ></div>
-              <span>{selectedItems.length} of {selectedSize} Selected</span>
+              <span>
+                {selectedItems.length} of {selectedSize} Selected
+              </span>
             </div>
 
             <div className="selected-list">
               {selectedItems.length > 0 ? (
-                selectedItems.map(item => (
-                  <div key={item.id} className="selected-item">
+                selectedItems.map((item) => (
+                  <div key={item.comboItemId} className="selected-item">
                     <span>{item.name}</span>
-                    <button onClick={() => toggleProduct(item)}><Trash2 size={14} /></button>
+                    <button onClick={() => removeProduct(item.comboItemId)}>
+                      <Trash2 size={14} />
+                    </button>
                   </div>
                 ))
               ) : (
@@ -131,7 +150,9 @@ const ComboBuilder = () => {
             <div className="price-breakdown">
               <div className="price-row">
                 <span>Bundle Discount</span>
-                <span className="discount">-{selectedSize === 3 ? '10%' : '15%'}</span>
+                <span className="discount">
+                  -{selectedSize === 3 ? "10%" : "15%"}
+                </span>
               </div>
               <div className="price-row total">
                 <span>Total Price</span>
@@ -139,8 +160,8 @@ const ComboBuilder = () => {
               </div>
             </div>
 
-            <button 
-              className="btn-primary w-full" 
+            <button
+              className="btn-primary w-full"
               disabled={selectedItems.length < selectedSize}
               onClick={handleAddCombo}
             >

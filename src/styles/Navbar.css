@@ -103,25 +103,83 @@
 }
 
 @media (max-width: 992px) {
+  .navbar {
+    height: 70px;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  .nav-actions {
+    gap: 15px;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
   .nav-links {
     position: fixed;
-    top: 0;
+    top: 70px;
     right: -100%;
-    height: 100vh;
-    width: 250px;
-    background-color: var(--bg-cream);
+    width: 280px;
+    height: calc(100vh - 70px);
+    background: white;
     flex-direction: column;
-    padding: 80px 30px;
-    transition: var(--transition);
-    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 30px;
+    padding: 30px;
+    transition: 0.3s ease;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 999;
   }
 
   .nav-links.active {
     right: 0;
   }
 
-  .mobile-toggle {
-    display: block;
-    z-index: 1001;
+  .nav-links a {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+}
+
+@media (max-width: 576px) {
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .nav-actions {
+    gap: 10px;
+  }
+
+  .nav-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .login-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .nav-links {
+    width: 100%;
+    right: -100%;
+  }
+
+  .nav-links.active {
+    right: 0;
   }
 }

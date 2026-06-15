@@ -41,7 +41,7 @@
 }
 
 .nav-links a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -5px;
   left: 0;
@@ -66,6 +66,21 @@
   display: flex;
   align-items: center;
   gap: 35px;
+}
+
+@media (max-width: 992px) {
+  .nav-actions {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-actions {
+    gap: 12px;
+  }
+  .logo {
+    font-size: 1.3rem !important;
+  }
 }
 
 .nav-icon {
@@ -99,7 +114,11 @@
 
 .mobile-toggle {
   display: none;
+  background: none;
+  border: none;
   color: var(--text-dark);
+  cursor: pointer;
+  padding: 4px;
 }
 
 @media (max-width: 992px) {
@@ -146,7 +165,10 @@
   }
 
   .nav-links.active {
-    right: 0;
+    transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .nav-links a {

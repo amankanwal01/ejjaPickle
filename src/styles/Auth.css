@@ -86,3 +86,13 @@
   text-align: center;
   color: #666;
 }
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 35px 20px;
+    border-radius: 20px;
+  }
+  .auth-header h1 {
+    font-size: 2rem;
+  }
+}

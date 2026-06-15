@@ -26,6 +26,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .card-img-wrapper img {
@@ -62,6 +63,7 @@
   line-height: 1.2;
   margin-bottom: 10px;
   color: var(--text-dark);
+  cursor: pointer;
 }
 
 .card-info .price {
@@ -83,7 +85,7 @@
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 700;
-  color: #8B6508;
+  color: #8b6508;
   border-bottom: 2px solid var(--primary);
   padding-bottom: 2px;
 }
@@ -93,10 +95,57 @@
   border-color: var(--secondary);
 }
 
-.card-info h3 {
-  cursor: pointer;
+/* ==========================================================================
+   ===== CLEAN TABLET & MOBILE RESPONSIVE METRICS (PURE CSS CARDS) =====
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .card-img-wrapper {
+    height: 240px; /* Tablet sizing to maintain aspect ratio */
+    margin-bottom: 15px;
+  }
 }
 
-.card-img-wrapper {
-  cursor: pointer;
+@media (max-width: 480px) {
+  .product-card {
+    padding: 10px; /* Mobile par card ke andar thoda space save kiya */
+    border-radius: 8px;
+  }
+
+  .card-img-wrapper {
+    height: 160px; /* Do grid column ke hisab se image wrapper ekdum perfect dikhega */
+    margin-bottom: 10px;
+  }
+
+  .card-img-wrapper img {
+    padding: 4px; /* Space compression for micro devices */
+  }
+
+  .card-info h3 {
+    font-size: 0.95rem; /* Title thoda chota kiya taaki wrap sahi se ho */
+    margin-bottom: 6px;
+  }
+
+  .card-info .price {
+    font-size: 0.9rem;
+  }
+
+  .card-meta {
+    margin-top: 8px;
+    flex-direction: column; /* Mobile par link aur price ek ke niche ek clean dikhenge space shortage ke chalte */
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .action-link {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .variant-label {
+    padding: 2px 6px;
+    font-size: 8px;
+    bottom: 5px;
+    right: 5px;
+  }
 }
